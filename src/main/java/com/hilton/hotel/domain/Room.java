@@ -1,5 +1,6 @@
-package com.hotelbooking.room_service.entity;
+package com.hilton.hotel.domain;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,8 +23,15 @@ public class Room {
     @Column(nullable = false, unique = true)
     private String roomNumber;
 
-    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 25)
+    private RoomType type;
+
+    @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal pricePerNight;
+
+    @Column(nullable = false)
+    private Integer capacity;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
