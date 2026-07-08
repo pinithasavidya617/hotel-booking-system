@@ -3,6 +3,7 @@ package com.hilton.hotel.domain;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -33,18 +34,16 @@ public class Room {
     @Column(nullable = false)
     private Integer capacity;
 
+    @Builder.Default
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private RoomStatus status;
+    private RoomStatus status = RoomStatus.AVAILABLE;
 
     @Column(length = 1000)
     private String description;
 
-    @Column(nullable = false, updatable = false)
+    @CreationTimestamp
+    @Column(name= "created_at", updatable = false)
     private LocalDateTime createdAt;
 
-    @PrePersist
-    protected void onCreate() {
-        this.createdAt = LocalDateTime.now();
-    }
 }
