@@ -3,22 +3,41 @@ package com.hilton.hotel.repository;
 import com.hilton.hotel.domain.Room;
 import com.hilton.hotel.domain.RoomStatus;
 import com.hilton.hotel.domain.RoomType;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
-import java.util.List;
 import java.util.Optional;
 
-@Repository
 public interface RoomRepository extends JpaRepository<Room, Long> {
 
     Optional<Room> findByRoomNumber(String roomNumber);
 
     boolean existsByRoomNumber(String roomNumber);
 
-    List<Room> findByStatus(RoomStatus status);
+    Page<Room> findByStatus(RoomStatus status, Pageable pageable);
 
-    List<Room> findByType(RoomType type);
+    Page<Room> findByType(RoomType type, Pageable pageable);
 
-    List<Room> findByStatusAndType(RoomStatus status, RoomType type);
+    Page<Room> findByStatusAndType(
+            RoomStatus status,
+            RoomType type,
+            Pageable pageable
+    );
+
+    @Query("""
+        SELECT r
+        FROM Room r
+        WHERE (:type IS NULL OR r.type = :type)
+        AND (:capacity IS NULL OR r.capacity >= :capacity)
+        AND (:status IS NULL OR r.status = :status)
+        """)
+    Page<Room> searchRooms(
+            @Param("type") RoomType type,
+            @Param("capacity") Integer capacity,
+            @Param("status") RoomStatus status,
+            Pageable pageable
+    );
 }

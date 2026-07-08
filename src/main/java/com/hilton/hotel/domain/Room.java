@@ -25,7 +25,7 @@ public class Room {
     private String roomNumber;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 25)
+    @Column(nullable = false, length = 50)
     private RoomType type;
 
     @Column(nullable = false, precision = 10, scale = 2)
