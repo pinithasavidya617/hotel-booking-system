@@ -1,7 +1,9 @@
 package com.hilton.hotel.controller;
 
+import com.hilton.hotel.domain.Room;
 import com.hilton.hotel.domain.RoomStatus;
 import com.hilton.hotel.domain.RoomType;
+import com.hilton.hotel.dto.CreateRoomRequest;
 import com.hilton.hotel.dto.RoomRequest;
 import com.hilton.hotel.dto.RoomResponse;
 import com.hilton.hotel.dto.RoomStatusUpdateRequest;
@@ -79,5 +81,13 @@ public class RoomController {
                         pageable
                 )
         );
+    }
+
+    @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<RoomResponse> updateRoom(@Valid @RequestBody CreateRoomRequest request
+            , @PathVariable Long id) {
+        Room room = roomService.updateRoom(id, request);
+        return  ResponseEntity.status(HttpStatus.CREATED).body(RoomResponse.from(room));
     }
 }
