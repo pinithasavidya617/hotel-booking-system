@@ -31,6 +31,9 @@ public class Guest {
     @Column(nullable = false, unique = true)
     private String email;
 
+    @Column(name = "keycloak_id", unique = true,nullable = false)
+    private String keycloakId;
+
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private UserRole role;
