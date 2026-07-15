@@ -20,5 +20,12 @@ spring:
     show-sql: true
 
 server:
-  port: 8081
+  port: 18081
+
+keycloak:
+  admin:
+    client-id: identity-server
+    client-secret: 74M3rHJ10E3UqtXHxSuh6Gyn6QLctnX7
+    realm: hotel-booking
+    server-url: http://localhost:9001
 
