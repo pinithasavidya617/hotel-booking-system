@@ -1,3 +1,31 @@
 spring:
   application:
     name: hotel
+  datasource:
+    url: jdbc:postgresql://localhost:5454/hotel_db
+    driver-class-name: org.postgresql.Driver
+    username: admin
+    password: admin
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9001/realms/hotel-booking
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+server:
+  port: 18081
+
+keycloak:
+  admin:
+    client-id: identity-server
+    client-secret: 74M3rHJ10E3UqtXHxSuh6Gyn6QLctnX7
+    realm: hotel-booking
+    server-url: http://localhost:9001
+
