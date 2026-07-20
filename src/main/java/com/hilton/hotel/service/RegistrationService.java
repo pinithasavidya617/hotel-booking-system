@@ -100,8 +100,14 @@ public class RegistrationService {
 
         if (roleResp.getBody() != null){
             restTemplate.postForEntity(
-                    serverUrl + "/admin/realms/" + realm + "/users/" + keycloakId + "/role-mappings/realm",
-                    new HttpEntity<>(List.of(roleResp.getBody(), headers)), Void.class
+                    serverUrl + "/admin/realms/" + realm +
+                            "/users/" + keycloakId +
+                            "/role-mappings/realm",
+                    new HttpEntity<>(
+                            List.of(roleResp.getBody()),
+                            headers
+                    ),
+                    Void.class
             );
         }
 
